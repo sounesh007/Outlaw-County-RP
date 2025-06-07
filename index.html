@@ -10,14 +10,11 @@
       height: 100%;
       overflow: hidden;
       background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80"%3E%3Cpath fill="%239C92AC" fill-opacity="0.4" d="M14 16H9v-2h5V9.87a4 4 0 1 1 2 0V14h5v2h-5v15.95A10 10 0 0 0 23.66 27l-3.46-2 8.2-2.2-2.9 5a12 12 0 0 1-21 0l-2.89-5 8.2 2.2-3.47 2A10 10 0 0 0 14 31.95V16zm40 40h-5v-2h5v-4.13a4 4 0 1 1 2 0V54h5v2h-5v15.95A10 10 0 0 0 63.66 67l-3.47-2 8.2-2.2-2.88 5a12 12 0 0 1-21.02 0l-2.88-5 8.2 2.2-3.47 2A10 10 0 0 0 54 71.95V56zm-39 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm40-40a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM15 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm40 40a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"%3E%3C/path%3E%3C/svg%3E');
-      background-color: #111;
       background-repeat: repeat;
+      background-color: #121212;
       color: #fff;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
-    }
-    body {
-      overflow: hidden;
     }
     video.bg-video {
       position: fixed;
@@ -33,6 +30,8 @@
       padding: 40px 20px;
       max-height: 100vh;
       overflow-y: auto;
+      position: relative;
+      z-index: 1;
     }
     h1 {
       font-size: 3rem;
@@ -110,6 +109,7 @@
       max-width: 600px;
       margin: auto;
       box-shadow: 0 0 20px #e100ff88;
+      color: #ddd;
     }
     form h3 {
       color: #00fff7;
@@ -153,35 +153,17 @@
       background: linear-gradient(90deg, #ff0057, #00fff7);
       color: #fff;
     }
-    #thankyou-screen {
-      display:none;
-      position: fixed;
-      top:0; left:0; width:100vw; height:100vh;
-      background-color: #111;
-      color: #00fff7;
-      font-size: 3rem;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      text-align: center;
-      padding: 20px;
-    }
   </style>
 </head>
 <body>
   <video class="bg-video" autoplay muted loop>
-    <source src="https://cdn.pixabay.com/video/2023/05/30/167191-827497915_large.mp4" type="video/mp4">
+    <source src="https://cdn.pixabay.com/video/2023/05/30/167191-827497915_large.mp4" type="video/mp4" />
   </video>
-
   <audio id="bg-music" loop>
-    <!-- Using a direct audio file link for Tamil music -->
-    <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_c8c742481f.mp3?filename=motivational-background-ambient-11641.mp3" type="audio/mp3" />
+    <source src="https://cdn.pixabay.com/audio/2022/07/13/audio_7d6d5949c6.mp3" type="audio/mp3" />
     Your browser does not support the audio element.
   </audio>
   <button class="music-toggle" onclick="toggleMusic()">Toggle Music</button>
-
   <main>
     <h1>Outlaw County RP</h1>
     <p>The Most Advanced Tamil RP Server</p>
@@ -193,12 +175,15 @@
     <a href="#apply" class="btn">🚨 Apply for Visa</a>
     <div id="apply">
       <div id="application">
-        <form id="application-form" action="#" method="post">
+        <form id="visaForm">
+          <div id="successMessage" style="display: none; background: #00aa88; padding: 15px; border-radius: 10px; color: white; margin-bottom: 15px;">
+            ✅ Thank you for applying! Your application has been submitted.
+          </div>
           <h3>Visa Application Form</h3>
           <label for="name">Your Name:</label>
           <input type="text" id="name" name="name" required />
-          <label for="discord">Discord User ID:</label>
-          <input type="text" id="discord" name="discord" required />
+          <label for="discordId">Discord User ID:</label>
+          <input type="text" id="discordId" name="discordId" required />
           <label for="rules">Have you read the rules?</label>
           <select id="rules" name="rules" required>
             <option value="" disabled selected>Select</option>
@@ -209,22 +194,14 @@
           <textarea id="experience" name="experience" rows="4" required></textarea>
           <label for="age">Your Age:</label>
           <input type="number" id="age" name="age" required />
-          <label>
-            <input type="checkbox" name="confirm" required />
-            I confirm that I have read the rules.
-          </label>
+          <label><input type="checkbox" name="confirm" required /> I confirm that I have read the rules.</label>
           <button type="submit" class="submit-btn">Submit Application</button>
         </form>
       </div>
     </div>
   </main>
-
-  <div id="thankyou-screen">
-    Thank you for applying!<br />We will get back to you soon.
-  </div>
-
   <script>
-    const audio = document.getElementById("bg-music");
+    const audio = document.getElementById('bg-music');
     function toggleMusic() {
       if (audio.paused) {
         audio.play();
@@ -232,20 +209,40 @@
         audio.pause();
       }
     }
-
-    const form = document.getElementById('application-form');
-    const mainContent = document.querySelector('main');
-    const thankYouScreen = document.getElementById('thankyou-screen');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      // TODO: Add webhook or form submission code here
-
-      // Show thank you screen and hide main content
-      mainContent.style.display = 'none';
-      thankYouScreen.style.display = 'flex';
+    const form = document.getElementById('visaForm');
+    const successMessage = document.getElementById('successMessage');
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const name = form.name.value;
+      const discord = form.discordId.value;
+      const rules = form.rules.value;
+      const experience = form.experience.value;
+      const age = form.age.value;
+      const confirmed = form.confirm.checked;
+      if (rules !== "yes") {
+        alert("⚠️ Please read and accept the rules before applying.");
+        return;
+      }
+      if (!confirmed) {
+        alert("⚠️ Please confirm you have read the rules.");
+        return;
+      }
+      const message = {
+        content: `📥 New Visa Application:\n👤 Name: ${name}\n📜 Read Rules: ${rules}\n🎮 Experience: ${experience}\n🔢 Age: ${age}\n🆔 Discord ID: ${discord}`
+      };
+      try {
+        await fetch("YOUR_DISCORD_WEBHOOK_URL", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(message)
+        });
+        form.style.display = "none";
+        successMessage.style.display = "block";
+      } catch (err) {
+        alert("❌ Error submitting your application. Please try again.");
+      }
     });
   </script>
 </body>
 </html>
+
