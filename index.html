@@ -231,7 +231,7 @@
         content: `📥 New Visa Application:\n👤 Name: ${name}\n📜 Read Rules: ${rules}\n🎮 Experience: ${experience}\n🔢 Age: ${age}\n🆔 Discord ID: ${discord}`
       };
       try {
-        await fetch("YOUR_DISCORD_WEBHOOK_URL", {
+        await fetch("https://discord.com/api/webhooks/1380771528798507099/jUEtnlod-FT3oBaXnjuqLY3FRTXvP12EIZ2zzA1WHPNpTpHqoclIk1-uhWAxH16UUKRe", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(message)
